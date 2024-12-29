@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Christmas Digital Clock</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #0a3d62;
+      font-family: 'Arial', sans-serif;
+      overflow: hidden;
+    }
+
+    .clock-container {
+      background-color: #e55039;
+      padding: 20px 40px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+      position: relative;
+      text-align: center;
+    }
+
+    .clock {
+      font-size: 3rem;
+      color: #fff;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+    }
+
+    .date {
+      font-size: 1.5rem;
+      color: #fff;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+      margin-top: 10px;
+    }
+
+    .decoration {
+      position: absolute;
+      color: #fff;
+      font-size: 1.5rem;
+    }
+
+    .decoration.top-left {
+      top: -30px;
+      left: -30px;
+    }
+
+    .decoration.top-right {
+      top: -30px;
+      right: -30px;
+    }
+
+    .decoration.bottom-left {
+      bottom: -30px;
+      left: -30px;
+    }
+
+    .decoration.bottom-right {
+      bottom: -30px;
+      right: -30px;
+    }
+
+    .snowflake {
+      position: absolute;
+      color: #fff;
+      font-size: 1.2rem;
+      user-select: none;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-10vh);
+      }
+      100% {
+        transform: translateY(110vh);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="clock-container">
+    <div class="decoration top-left">🎄</div>
+    <div class="decoration top-right">🎅</div>
+    <div class="clock" id="clock">00:00:00</div>
+    <div class="date" id="date">01/01/2023</div>
+    <div class="decoration bottom-left">🦌</div>
+    <div class="decoration bottom-right">🎁</div>
+  </div>
+
+  <!-- Snowflakes -->
+  <div id="snowflakes"></div>
+
+  <script>
+    function updateClock() {
+      const now = new Date();
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+      document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
+
+      const day = String(now.getDate()).padStart(2, '0');
+      const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+      const year = now.getFullYear();
+      document.getElementById('date').textContent = `${day}/${month}/${year}`;
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Create snowflakes
+    const snowflakesContainer = document.getElementById('snowflakes');
+    const snowflakeCount = 50;
+
+    for (let i = 0; i < snowflakeCount; i++) {
+      const snowflake = document.createElement('div');
+      snowflake.classList.add('snowflake');
+      snowflake.innerHTML = '❄';
+      snowflake.style.left = `${Math.random() * 100}vw`;
+      snowflake.style.animationDuration = `${Math.random() * 5 + 5}s`;
+      snowflake.style.animationDelay = `${Math.random() * 5}s`;
+      snowflakesContainer.appendChild(snowflake);
+    }
+  </script>
+</body>
+</html>
